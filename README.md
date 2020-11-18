@@ -1,15 +1,15 @@
 
 ## users テーブル
-| column             | Type   | Options     | 
-| ------------------ | ------ | ----------- |
-| nickname           | string | null: false |
-| first_name         | string | null: false |
-| last_name          | string | null: false |
-| first_name_kana    | string | null: false |
-| last_name_kana     | string | null: false |
-| birth_date         | date   | null: false |
-| encrypted_password | string | null: false |
-| email              | string | null: false |
+| column             | Type   | Options                    | 
+| ------------------ | ------ | -------------------------- |
+| nickname           | string | null: false                |
+| first_name         | string | null: false                |
+| last_name          | string | null: false                |
+| first_name_kana    | string | null: false                |
+| last_name_kana     | string | null: false                |
+| birth_date         | date   | null: false                |
+| encrypted_password | string | null: false                |
+| email              | string | null: false , unique: true |
 
 ### Association
 has_many :items
@@ -39,7 +39,7 @@ has_one :order
 | prefecture_id | integer   | null: false                    |
 | city          | string    | null: false                    |
 | house_number  | string    | null: false                    |
-| building      | string    | null: false                    |
+| building      | string    |                                |
 | telephone     | string    | null: false                    |
 | order         | reference | null: false, foreign_key: true |
 
