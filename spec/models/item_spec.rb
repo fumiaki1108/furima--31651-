@@ -16,7 +16,7 @@ RSpec.describe Item, type: :model do
       @item.valid?
       expect(@item.errors.full_messages).to include("Image can't be blank")
     end
-
+    
     it '商品名が必須であること' do
       @item.name = nil
       @item.valid?
@@ -55,6 +55,30 @@ RSpec.describe Item, type: :model do
 
     it '発送までの日数についての情報が必須であること' do
       @item.scheduled_delivery_id = nil
+      @item.valid?
+      expect(@item.errors.full_messages).to include("Scheduled delivery Select")
+    end
+
+    it 'カテゴリーの情報が---では保存できないこと' do
+      @item.category_id = 1
+      @item.valid?
+      expect(@item.errors.full_messages).to include("Category Select")
+    end
+
+    it '商品の状態についての情報が---では保存できないこと' do
+      @item.sales_status_id = 1
+      @item.valid?
+      expect(@item.errors.full_messages).to include("Sales status Select")
+    end
+
+    it '配送料の負担についての情報が---では保存できないこと' do
+      @item.shipping_fee_id = 1
+      @item.valid?
+      expect(@item.errors.full_messages).to include("Shipping fee Select")
+    end
+
+    it '発送までの日数についての情報が---では保存できないこと' do
+      @item.scheduled_delivery_id = 1
       @item.valid?
       expect(@item.errors.full_messages).to include("Scheduled delivery Select")
     end

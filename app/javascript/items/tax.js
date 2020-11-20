@@ -1,5 +1,4 @@
 function tax() {
-  console.log("tax")
   const priceNum = document.getElementById("item-price");
   priceNum.addEventListener('keyup', () => {
     const price = priceNum.value;
@@ -12,4 +11,6 @@ function tax() {
   });
 };
 
-window.addEventListener('load', tax); 
+window.addEventListener('load', tax);
+
+   console.log
