@@ -4,8 +4,8 @@ RSpec.describe User, type: :model do
   before do
     @user = FactoryBot.build(:user)
   end
+  
   describe 'ユーザー新規登録/ユーザー情報' do
-
     it '適切な入力がされていれば登録できる' do
       expect(@user).to be_valid
     end
@@ -35,7 +35,7 @@ RSpec.describe User, type: :model do
       expect(@user.errors.full_messages).to include("Email is invalid")
     end
 
-    it 'パスワードが必須であること' do
+    it "パスワードが必須であること" do
       @user.password = ''
       @user.valid?
       expect(@user.errors.full_messages).to include("Password can't be blank")
@@ -96,7 +96,7 @@ RSpec.describe User, type: :model do
     it 'ユーザー苗字のフリガナは、全角（カタカナ）での入力が必須であること' do
       @user.last_name_kana = 'あい'
       @user.valid?
-      expect(@user.errors.full_messages).to include('Last name kana is invalid')
+      expect(@user.errors.full_messages).to include("Last name kana Full-width katakana characters")
     end
 
     it 'ユーザー名前のフリガナは、全角（カタカナ）での入力が必須であること' do
