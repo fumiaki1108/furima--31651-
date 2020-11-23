@@ -95,17 +95,17 @@ RSpec.describe Item, type: :model do
       expect(@item.errors.full_messages).to include("Scheduled delivery Select")
     end
 
-    it '価格についての情報が必須であること' do
-      @item.price = nil
+    it "価格の範囲が10,000,000以上では登録できないこと" do
+      @item.price = 9999999
       @item.valid?
-      expect(@item.errors.full_messages).to include("Price can't be blank")
-    end
+      expect(@item.errors[:price]).to include()
+      end
 
-    it '価格の範囲が、¥300~¥9,999,999の間であること' do
-      @item.price = 10000000
+    it "価格の範囲が299円以下では登録できないこと" do
+      @item.price = 300
       @item.valid?
-      expect(@item.errors.full_messages).to include("Price is out of range")
-    end
+      expect(@item.errors[:price]).to include()
+      end
 
     it '販売価格は半角数字のみ保存可能であること' do
       @item.price = "５０００"
