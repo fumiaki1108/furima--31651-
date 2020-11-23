@@ -12,5 +12,3 @@ function tax() {
 };
 
 window.addEventListener('load', tax);
-
-   console.log
