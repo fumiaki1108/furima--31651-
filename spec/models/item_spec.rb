@@ -7,6 +7,18 @@ RSpec.describe Item, type: :model do
       @item = FactoryBot.build(:item)
     end
 
+    context '商品出品が上手くいく場合'
+    it '全ての項目の入力が存在すれば保存できること' do
+      expect(@item).to be_valid
+    end
+
+    context '商品出品が上手くいかない場合'
+    it '商品画像を1枚つけることが必須であること' do
+      @item.image = nil
+      @item.valid?
+      expect(@item.errors.full_messages).to include("Image can't be blank")
+    end
+
     it '適切な入力がされていればデータが保存できること' do
       expect(@item).to be_valid
     end
