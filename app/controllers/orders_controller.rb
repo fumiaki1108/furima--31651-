@@ -1,20 +1,49 @@
-class OrderAddress
-  include ActiveModel::Model
-  attr_accessor :postal_code, :prefecture_id, :city, :house_number,
-                :building, :telephone, :item_id, :user_id
+class OrdersController < ApplicationController
+  before_action :authenticate_user!, only: [:index, :create]
+  before_action :set_item, only: [:index, :create]
+  before_action :move_to_index, only: [:index, :create]
 
-  with_options presence: true do
-    validates :postal_code, format: {with: /\A[0-9]{3}-[0-9]{4}\z/, message: "is invalid. Include hyphen(-)"}
-    validates :prefecture_id, numericality: { other_than: 0, message: "can't be blank" }
-    validates :city
-    validates :house_number
-    validates :telephone, format: {with: /\A\d{10,11}\z/, message: "number Input only number"}
+  def index
+    set_item
+    @order_address = OrderAddress.new
   end
 
-  def save
-    order = Order.create(user_id: user_id, item_id: item_id)
-    Address.create(postal_code: postal_code, prefecture_id: prefecture_id,
-                   city: city, house_number: house_number, building: building,
-                    telephone: telephone, order_id: order.id)
+  def create
+    @order_address = OrderAddress.new(order_params)
+    set_item
+    if @order_address.valid?
+      pay_item
+      @order_address.save
+      redirect_to root_path
+    else
+      render :index
+    end
   end
-end 
+  
+  private
+
+  def order_params
+    params.require(:order_address).permit(:postal_code, :prefecture_id, :city, :house_number, :building, :telephone).merge(item_id: params[:item_id], user_id: current_user.id, token: params[:token])
+  end
+
+  def pay_item
+    Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
+    Payjp::Charge.create(
+      amount: @item.price,
+      card: order_params[:token],
+      currency: 'jpy'
+    )
+  end
+
+  def set_item
+    @item = Item.find(params[:item_id])
+  end
+
+  def move_to_index
+    if current_user == @item.user || Order.exists?(item_id: params[:item_id])
+      redirect_to root_path
+    end
+  end
+
+
+end
