@@ -19,6 +19,7 @@ class Item < ApplicationRecord
   validates_inclusion_of :price, in: 300..9999999, message: 'is out of range'
 
   belongs_to :user
+  has_one :order
   has_one_attached :image
   extend ActiveHash::Associations::ActiveRecordExtensions
   belongs_to :category
