@@ -10,11 +10,6 @@ RSpec.describe OrderAddress, type: :model do
     it 'addressesとtokenがあれば購入できる' do
       expect(@order_address).to be_valid
     end
-    # 建物は空でも〜の部分は必須事項ではないとのことなのでとりあえずコメントアウトしてます。
-    #  it '建物は空でも登録できる' do
-    #   @user_address.building = ''
-    #   expect(@order_address).to be_valid
-    # end
   end
 
   context "異常系" do
