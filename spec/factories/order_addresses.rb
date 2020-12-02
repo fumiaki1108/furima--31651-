@@ -5,7 +5,7 @@ FactoryBot.define do
     city          {Faker::Lorem.sentence}
     house_number  {Faker::Lorem.sentence}
     building      {Faker::Lorem.sentence}
-    telephone     {Faker::Number.leading_zero_number(digits: 10)}
+    telephone     {Faker::Number.leading_zero_number(digits: 11)}
     token         {Faker::Lorem.sentence}
   end
 end

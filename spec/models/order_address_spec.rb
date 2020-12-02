@@ -23,10 +23,10 @@ RSpec.describe OrderAddress, type: :model do
     end
 
 
-    it '都道府県が選択されないといけない' do
+    it '都道府県にはハイフンが要らず且つ選択されないといけない' do
       @order_address.prefecture_id = nil
       @order_address.valid?
-      expect(@order_address.errors.full_messages).to include("Prefecture can't be blank")
+      expect(@order_address.errors.full_messages).to include("Prefecture can't be blank", "Telephone number Input only number")
     end
 
     it '市区町村の入力が必要である' do
@@ -47,10 +47,10 @@ RSpec.describe OrderAddress, type: :model do
       expect(@order_address.errors.full_messages).to include("Telephone can't be blank")
     end
 
-    it '電話番号は数字のみでなくてはならない' do
+    it '電話番号にはハイフンは不要で、11桁以内であること' do
       @order_address.telephone = '090-0000-0000'
       @order_address.valid?
-      expect(@order_address.errors.full_messages).to include("Telephone number Input only number")
+      expect(@order_address.errors.full_messages).to include("Telephone number Input only number", "Telephone number is too long (maximum is 11 characters)")
     end
 
     it '正しいカード情報の入力が必要である' do
