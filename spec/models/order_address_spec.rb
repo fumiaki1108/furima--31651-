@@ -10,11 +10,11 @@ RSpec.describe OrderAddress, type: :model do
     it 'addressesとtokenがあれば購入できる' do
       expect(@order_address).to be_valid
     end
-    
-    it '建物は空でも登録できる' do
-      @user_address.building = ''
-      expect(@order_address).to be_valid
-    end
+    # 建物は空でも〜の部分は必須事項ではないとのことなのでとりあえずコメントアウトしてます。
+    #  it '建物は空でも登録できる' do
+    #   @user_address.building = ''
+    #   expect(@order_address).to be_valid
+    # end
   end
 
   context "異常系" do
@@ -34,13 +34,13 @@ RSpec.describe OrderAddress, type: :model do
     it '都道府県にはハイフンが要らず且つ選択されないといけない' do
       @order_address.prefecture_id = nil
       @order_address.valid?
-      expect(@order_address.errors.full_messages).to include("Prefecture can't be blank", "Telephone number Input only number")
+      expect(@order_address.errors.full_messages).to include("Prefecture can't be blank", "Prefecture must select")
     end
 
     it '都道府県では0の場合はエラーであること' do
       @order_address.prefecture_id = 0
       @order_address.valid?
-      expect(@order_address.errors.full_messages).to include("must select")
+      expect(@order_address.errors.full_messages).to include("Prefecture must select")
     end
 
     it '市区町村の入力が必要である' do
@@ -62,9 +62,10 @@ RSpec.describe OrderAddress, type: :model do
     end
 
     it '電話番号にはハイフンは不要で、11桁以内であること' do
-      @order_address.telephone = '09000000000'
+      @order_address.telephone = '090-1234-5678'
       @order_address.valid?
-      expect(@order_address.errors.full_messages).to include("Telephone number Input only number", "Telephone number is too long (maximum is 11 characters)")
+      # binding.pry
+      expect(@order_address.errors.full_messages).to include("Telephone is invalid")
     end
 
     it '電話番号には数字以外はエラーであること' do
