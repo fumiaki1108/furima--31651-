@@ -38,9 +38,9 @@ RSpec.describe OrderAddress, type: :model do
     end
 
     it '都道府県では0の場合はエラーであること' do
-      @order_address.prefecture_id = '0'
+      @order_address.prefecture_id = 0
       @order_address.valid?
-      expect(@order_address.errors.full_messages).to include("Prefecture can't be blank")
+      expect(@order_address.errors.full_messages).to include("must select")
     end
 
     it '市区町村の入力が必要である' do
