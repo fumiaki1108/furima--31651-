@@ -8,7 +8,7 @@ class OrderAddress
     validates :prefecture_id, numericality: { other_than: 0, message: "must select" }
     validates :city
     validates :house_number
-    validates :telephone, format: {with: /\A\d{11}\z/, message: "number Input only number"}
+    validates :telephone, format: {with: /\A\d{11}\z/,}
     validates :token
   end
 
